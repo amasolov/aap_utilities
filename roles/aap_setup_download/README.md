@@ -17,6 +17,7 @@ The following input variables are required:
 It has no default value and _must_ be defined.
 * `aap_setup_down_version` defines the minor version to download (e.g. `2.5`). Defaults to current latest `2.5` version.
 The default is the latest version available at time of writing.
+* `aap_setup_down_version_patch` defines the patch version to download (e.g `12`) Defaults to false which will always get latest.
 * `aap_setup_down_dest_dir` is the directory to where you want to download the tarball.
 It is by default the working directory `aap_setup_working_dir` also used by other roles of the collection, or ultimately `/var/tmp`.
 * `aap_setup_down_type` can be either `setup`, `setup-bundle`, `containerized-setup`, depending which flavour of the tarball you want to download.

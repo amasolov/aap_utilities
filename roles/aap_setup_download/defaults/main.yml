@@ -9,7 +9,10 @@
 # which version of the installer to download
 aap_setup_down_version: "2.5"
 
-# Which system architecture to dowload for
+# Which minor version to download, eg {{ aap_setup_down_version }}-12
+aap_setup_down_version_patch: false  # set to false to download the latest version, 12 for 2.5-12
+
+# Which system architecture to download for
 aap_setup_arch: x86_64
 
 # Which RHEL version are you using (8 or 9)

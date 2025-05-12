@@ -26,10 +26,45 @@
       'ansible-automation-platform-setup'))) | sort(attribute='datePublished', reverse=True) | selectattr('filename', 'search', (aap_setup_down_type | string) + '-'
       + (aap_setup_down_version | string)) }}"
 
-- name: Downloading the latest installer of type {{ aap_setup_down_type }}
+- name: Display all the filenames available for download
+  ansible.builtin.debug:
+    msg: "{{ __aap_setup_down_images | map(attribute='filename') | list }}"
+
+- name: Select the image to download or latest
+  ansible.builtin.set_fact:
+    is_aap_setup_down_latest: "{{ (__aap_image_to_download.filename == __aap_setup_down_images[0].filename) | bool }}"
+    __aap_image_to_download: "{{ __aap_image_to_download }}"
+    __aap_filtered_version_selected: "{{ __aap_filtered_version_selected }}"
+  vars:
+    __aap_filtered_version_selected: >-
+      {{ __aap_setup_down_images | selectattr('filename', 'search', (aap_setup_down_version | string) + '-' + (aap_setup_down_version_patch | string)) | list }}
+    __aap_image_to_download: >-
+      {{ (__aap_filtered_version_selected | length > 0) | ternary(__aap_filtered_version_selected[0], __aap_setup_down_images[0]) }}
+
+- name: Assert if a version is selected if its avail for download
+  ansible.builtin.assert:
+    that:
+      - __aap_filtered_version_selected | length != 0
+    fail_msg:
+      - "The selected version {{ aap_setup_down_version }}-{{ aap_setup_down_version_patch }} is not available for download. Please check the version and try again."
+      - "Available versions are: {{ __aap_setup_down_images | map(attribute='filename') | list }}"
+  when: aap_setup_down_version_patch  # This is false when its not set.
+
+- name: Notify if the selected version is not the latest
+  ansible.builtin.pause:
+    prompt: |
+      ########################################################################################
+      The selected version {{ __aap_image_to_download.filename }} is not the latest version
+      The latest version is: {{ __aap_setup_down_images[0].filename }}
+      A fact 'is_aap_setup_down_latest' is set to false.
+      ########################################################################################
+    seconds: 1
+  when: not is_aap_setup_down_latest
+
+- name: Downloading the installer of type {{ aap_setup_down_type }}
   ansible.builtin.get_url:
-    url: "{{ __aap_setup_down_images[:3][0].downloadHref }}"
-    dest: "{{ aap_setup_down_dest_dir }}/{{ __aap_setup_down_images[:3][0].filename }}"
+    url: "{{ __aap_image_to_download.downloadHref }}"
+    dest: "{{ aap_setup_down_dest_dir }}/{{ __aap_image_to_download.filename }}"
     mode: "0644"
     headers:
       Authorization: Bearer {{ __aap_setup_down_login.json.access_token }}
