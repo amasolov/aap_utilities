@@ -7,11 +7,15 @@
     api_key: "{{ __aap_ocp_install_auth_results['openshift_auth']['api_key'] }}"
     validate_certs: "{{ aap_ocp_install_connection['validate_certs'] | default(omit) }}"
     state: present
-    resource_definition: "{{ lookup('ansible.builtin.template', 'namespace.yaml.j2', template_vars=ns_vars) | from_yaml }}"
+    resource_definition: "{{ lookup('ansible.builtin.template', 'namespace.yaml.j2', template_vars=ns_vars) | from_yaml | ansible.builtin.combine(aap_ocp_install_platform['namespace_manifest_overrides'] | default({}), recursive=true) }}"
     apply: true
   vars:
     ns_vars:
       ns_name: "{{ aap_ocp_install_platform['namespace'] }}"
+
+- name: install-platform | Build AnsibleAutomationPlatform custom resource
+  ansible.builtin.include_tasks:
+    file: build-platform-cr.yml
 
 - name: install-platform | Create automation platform instance
   kubernetes.core.k8s:
@@ -19,7 +23,7 @@
     api_key: "{{ __aap_ocp_install_auth_results['openshift_auth']['api_key'] }}"
     validate_certs: "{{ aap_ocp_install_connection['validate_certs'] | default(omit) }}"
     state: present
-    resource_definition: "{{ lookup('template', 'platform/instance.yaml.j2') | from_yaml }}"
+    resource_definition: "{{ __aap_ocp_install_platform_cr }}"
     apply: true
 
 - name: install-platform | Wait for operator to create the automation platform route
@@ -199,6 +203,6 @@
     api_key: "{{ __aap_ocp_install_auth_results['openshift_auth']['api_key'] }}"
     validate_certs: "{{ aap_ocp_install_connection['validate_certs'] | default(omit) }}"
     state: present
-    resource_definition: "{{ lookup('template', 'platform/consolelink.yaml.j2') | from_yaml }}"
+    resource_definition: "{{ lookup('template', 'platform/consolelink.yaml.j2') | from_yaml | ansible.builtin.combine(aap_ocp_install_platform['consolelink_manifest_overrides'] | default({}), recursive=true) }}"
     apply: true
 ...
