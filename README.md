@@ -40,20 +40,24 @@ The `aap_install_ocp` role requires the `kubernetes` (version 12.0.0 or later) P
 
 ## Links to Ansible Automation Platform Collections
 
-| Collection Name                                                                     | Purpose                       |
+|                                      Collection Name                                |            Purpose            |
 |:-----------------------------------------------------------------------------------:|:-----------------------------:|
-| [Ansible.controller repo](https://github.com/ansible/awx/tree/devel/awx_collection) | Automation controller modules |
-| [Ansible Hub Configuration](https://github.com/ansible/galaxy_collection)           | Automation hub configuration  |
+| [ansible.platform repo](https://github.com/ansible/ansible.platform)                | gateway/platform modules      |
+| [ansible.hub repo](https://github.com/ansible-collections/ansible_hub)              | Automation hub modules        |
+| [ansible.controller repo](https://github.com/ansible/awx/tree/devel/awx_collection) | Automation controller modules |
+| [ansible.eda repo](https://github.com/ansible/event-driven-ansible)                 | Event Driven Ansible modules  |
 
 ## Links to other Validated Configuration Collections for Ansible Automation Platform
 
-| Collection Name                                                                                     | Purpose                                   |
-|:---------------------------------------------------------------------------------------------------:|:-----------------------------------------:|
-| [AAP >= 2.5 Configuration](https://github.com/redhat-cop/infra.aap_configuration)                   | Ansible Automation Platform configuration |
-| [AAP <= 2.4 Controller Configuration](https://github.com/redhat-cop/infra.controller_configuration) | Automation controller configuration       |
-| [EE Utilities](https://github.com/redhat-cop/ee_utilities)                                          | Execution Environment creation utilities  |
-| [AAP installation Utilities](https://github.com/redhat-cop/aap_utilities)                           | Ansible Automation Platform Utilities     |
-| [AAP Configuration Template](https://github.com/redhat-cop/aap_configuration_template)              | Configuration Template for this suite     |
+|                                      Collection Name                                                  |                      Purpose                      |
+|:-----------------------------------------------------------------------------------------------------:|:-------------------------------------------------:|
+| [AAP >= 2.5 Configuration](https://github.com/redhat-cop/infra.aap_configuration)                     | Ansible Automation Platform configuration         |
+| [AAP <= 2.4 Controller Configuration](https://github.com/redhat-cop/infra.controller_configuration)   | Automation controller configuration               |
+| [AAP Configuration Extended](https://github.com/redhat-cop/aap_configuration_extended)                | Where other useful roles that don't fit here live |
+| [EE Utilities](https://github.com/redhat-cop/ee_utilities)                                            | Execution Environment creation utilities          |
+| [AAP Configuration Template](https://github.com/redhat-cop/aap_configuration_template)                | Configuration Template for this suite             |
+| [Ansible Validated Gitlab Workflows](https://gitlab.com/redhat-cop/infra/ansible_validated_workflows) | Gitlab CI/CD Workflows for ansible content        |
+| [Ansible Validated GitHub Workflows](https://github.com/redhat-cop/infra.ansible_validated_workflows) | GitHub CI/CD Workflows for ansible content        |
 
 ## Included content
 
@@ -85,6 +89,9 @@ collections:
 
 ## Release and Upgrade Notes
 
+For details on changes between versions, please see
+[the changelog](https://github.com/redhat-cop/aap_utilities/blob/devel/CHANGELOG.rst).
+
 Many roles and variables have been renamed to reflect the product renaming from Tower to controller/AAP.
 Verify carefully your inventory variables and playbooks.
 
@@ -110,4 +117,8 @@ More information about contributing can be found in our [Contribution Guidelines
 
 GNU General Public License v3.0 or later.
 
-See [LICENSE](LICENSE) to see the full text.
+See [LICENSE](https://github.com/redhat-cop/aap_utilities/blob/devel/LICENSE) to see the full text.
+
+## Support
+
+This collection is [Ansible Validated Content](https://access.redhat.com/articles/3166901). It is reviewed and tested by Red Hat but is not supported under a Red Hat SLA. For reporting issues and requesting improvements, file an issue at the [AAP Utilities repository](https://github.com/redhat-cop/aap_utilities/issues). Community help is also available on the [Ansible Forum](https://forum.ansible.com/tag/infra-config-as-code).
