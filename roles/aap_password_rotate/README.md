@@ -19,7 +19,7 @@ Supports both **podman** (containerised installer) and **operator** (Kubernetes/
 ### Database Passwords
 
 | Component | DB User | Inventory Variable |
-|---|---|---|
+| --- | --- | --- |
 | Controller | `awx` | `controller_pg_password` |
 | Gateway | `gateway` | `gateway_pg_password` |
 | EDA | `eda` | `eda_pg_password` |
@@ -29,7 +29,7 @@ Supports both **podman** (containerised installer) and **operator** (Kubernetes/
 ### Admin User Passwords
 
 | Component | Management Command |
-|---|---|
+| --- | --- |
 | Gateway | `aap-gateway-manage changepassword admin` |
 | Controller | `awx-manage changepassword admin` |
 | Hub | `pulpcore-manager reset-admin-password` |
@@ -144,7 +144,7 @@ file via `aap_password_rotate_external_db_tasks`. The role calls `include_tasks`
 on it instead of pausing. Your tasks file receives these variables:
 
 | Variable | Type | Description |
-|---|---|---|
+| --- | --- | --- |
 | `aap_password_rotate_components` | list | Components being rotated (e.g. `[controller, hub, eda, gateway]`) |
 | `__pw_db_users` | dict | Component to DB username (e.g. `{controller: automationcontroller}`) |
 | `__pw_db_passwords` | dict | Component to new password |
