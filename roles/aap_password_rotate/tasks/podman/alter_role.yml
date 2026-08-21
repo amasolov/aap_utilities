@@ -2,7 +2,7 @@
 # ALTER ROLE for a single component's DB user on podman deployments (internal DB).
 # Called in a loop from rotate_db_manual.yml.
 
-- name: "ALTER ROLE {{ __aap_password_rotate_db_config[__pw_component].db_user_podman }} ({{ __pw_component }})"
+- name: "ALTER ROLE for component - {{ __pw_component }}"
   ansible.builtin.command:
     cmd: >-
       podman exec {{ aap_password_rotate_pg_container }}

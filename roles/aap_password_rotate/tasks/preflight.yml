@@ -93,7 +93,7 @@
       block:
         - name: Find installer directory
           ansible.builtin.shell:
-            cmd: "ls -d /tmp/ansible-automation-platform-containerized-setup-*/ /opt/aap-installer/ /home/*/aap-installer/ 2>/dev/null | head -1 | tr -d '\\n'"
+            cmd: "set -o pipefail && ls -d /tmp/ansible-automation-platform-containerized-setup-*/ /opt/aap-installer/ /home/*/aap-installer/ 2>/dev/null | head -1 | tr -d '\\n'"
             executable: /bin/bash
           register: __pw_installer_dir
           changed_when: false

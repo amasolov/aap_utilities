@@ -3,7 +3,7 @@
 # Uses the username read from the K8s postgres-configuration secret
 # (stored in __pw_db_users map), not a hardcoded value.
 
-- name: "ALTER ROLE {{ __pw_db_users[__pw_component] }} via PG pod ({{ __pw_component }})"
+- name: "ALTER ROLE via PG pod - {{ __pw_component }}"
   ansible.builtin.command:
     cmd: >-
       {{ aap_password_rotate_kubectl_binary }} -n {{ aap_password_rotate_namespace }}
