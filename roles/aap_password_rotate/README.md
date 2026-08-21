@@ -28,12 +28,16 @@ Supports both **podman** (containerised installer) and **operator** (Kubernetes/
 
 ### Admin User Passwords
 
-| Component | Management Command |
+| Component | Method |
 | --- | --- |
-| Gateway | `aap-gateway-manage changepassword admin` |
-| Controller | `awx-manage changepassword admin` |
-| Hub | `pulpcore-manager reset-admin-password` |
+| Gateway | Django shell via `aap-gateway-manage shell` (`get_user_model().set_password`) |
+| Controller | Django shell via `awx-manage shell` (`get_user_model().set_password`) |
+| Hub | `pulpcore-manager reset-admin-password --password <pw>` |
 | EDA | `aap-eda-manage update_password --username admin --password <pw>` |
+
+> **Note:** Gateway and Controller use the Django ORM directly instead of the
+> interactive `changepassword` command, which requires a TTY that is not
+> available inside `podman exec` or `kubectl exec` contexts.
 
 ## How It Works
 
